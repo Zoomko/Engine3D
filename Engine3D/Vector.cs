@@ -6,16 +6,24 @@ using System.Threading.Tasks;
 
 namespace Engine3D
 {
-    struct Vector
+    public class Vector
     {
-        public float x;
-        public float y;
-        public float z;        
-        public Vector(float x, float y, float z)
+        private double _x;
+        private double _y;
+        private double _z;
+        private double _w = 1;
+
+        public double X { get => _x; set => _x = value; }
+        public double Y { get => _y; set => _y = value; }
+        public double Z { get => _z; set => _z = value; }
+        public double W { get => _w; }
+
+        public Vector(double x, double y, double z)
         {
-            this.x = x;
-            this.y = y;
-            this.z = z;
+            this._x = x;
+            this._y = y;
+            this._z = z;
         }
+        public Vector() { }
     }
 }
