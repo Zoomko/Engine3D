@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine3D", "Engine3D\Engine3D.csproj", "{C769ECF1-A9E1-466C-8C67-E1871642E866}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C769ECF1-A9E1-466C-8C67-E1871642E866}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C769ECF1-A9E1-466C-8C67-E1871642E866}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C769ECF1-A9E1-466C-8C67-E1871642E866}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C769ECF1-A9E1-466C-8C67-E1871642E866}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {265DB3F7-B6B2-419E-954B-9AB993CF2AEC}
+	EndGlobalSection
+EndGlobal
