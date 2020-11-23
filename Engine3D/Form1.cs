@@ -17,5 +17,10 @@ namespace Engine3D
         {
             InitializeComponent();            
         }
+
+        private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
