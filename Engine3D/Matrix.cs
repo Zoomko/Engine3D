@@ -51,5 +51,27 @@ namespace Engine3D
             return result;
         }
 
+        public static bool operator ==(Matrix mat1, Matrix mat2)
+        {
+            if(mat1.Columns == mat2.Columns && mat1.Rows == mat2.Rows)
+            {
+                for (var i = 0; i < mat1.Rows; i++)
+                {
+                    for (var j = 0; j < mat1.Columns; j++)
+                    {
+                        if (mat1.Values[i, j] != mat2.Values[i, j])
+                            return false;
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public static bool operator !=(Matrix mat1, Matrix mat2)
+        {
+            return !(mat1 == mat2);
+        }
+
     }
 }
