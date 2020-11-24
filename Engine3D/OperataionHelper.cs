@@ -19,11 +19,12 @@ namespace Engine3D
             Vector result = new Vector(resMat.Values[0, 0], resMat.Values[0, 1], resMat.Values[0, 2], resMat.Values[0,3]);
             return result;
         }
-        public static Matrix MultiplyMatrixByVector(Matrix mat, Vector vec)
+        public static Vector MultiplyMatrixByVector(Matrix mat, Vector vec)
         {
             Matrix vecMatrix = new Matrix(1, 4, new double[1, 4] { { vec.X, vec.Y, vec.Z, vec.W } });
             Matrix resMat = mat.Multiply(vecMatrix);
-            return resMat;
+            Vector resVector = new Vector(resMat.Values[0, 0], resMat.Values[1, 0], resMat.Values[2, 0], resMat.Values[3, 0]);
+            return resVector;
         }
     }
 }

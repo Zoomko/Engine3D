@@ -32,5 +32,16 @@ namespace Engine3D
             this._w = w;
         }
         public Vector() { }
+
+        public static bool operator ==(Vector vec1, Vector vec2)
+        {
+            if (vec1.X == vec2.X && vec1.Y == vec2.Y && vec1.Z == vec2.Z && vec1.W == vec2.W)
+                return true;
+            else return false;
+        }
+        public static bool operator !=(Vector vec1, Vector vec2)
+        {
+            return !(vec1 == vec2);
+        }
     }
 }

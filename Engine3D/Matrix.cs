@@ -51,6 +51,7 @@ namespace Engine3D
             return result;
         }
 
+        
         public static bool operator ==(Matrix mat1, Matrix mat2)
         {
             if(mat1.Columns == mat2.Columns && mat1.Rows == mat2.Rows)
