@@ -53,8 +53,10 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Matrix.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="ObjReader.cs" />
+    <Compile Include="OperataionHelper.cs" />
     <Compile Include="Polygon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

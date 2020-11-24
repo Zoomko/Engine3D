@@ -14,6 +14,7 @@ namespace Engine3D
         {
             vertices = vert;
             polygons = poly;
+            
         }
         public Model()
         {

@@ -24,6 +24,13 @@ namespace Engine3D
             this._y = y;
             this._z = z;
         }
+        public Vector(double x, double y, double z, double w)
+        {
+            this._x = x;
+            this._y = y;
+            this._z = z;
+            this._w = w;
+        }
         public Vector() { }
     }
 }
