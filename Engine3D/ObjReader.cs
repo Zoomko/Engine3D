@@ -50,7 +50,7 @@ namespace Engine3D
                     MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
                     $"Details:\n\n{ex.StackTrace}");
                 }
-                model = new Model(vertices, polygons);
+                model = new Model(vertices, polygons, new OrthographicNormalizeMatrix());
             }
             return model;
         }   
