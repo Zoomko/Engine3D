@@ -18,10 +18,12 @@ namespace Engine3D
         private Camera _camera;
         private svvSettings _svvSettings;
 
-        private double svvSideX = 15;
-        private double svvSideY = 15;
+        private double svvSideX = 30;
+        private double svvSideY = 30;
         private double svvNearPlane = 1;
         private double svvFarPlane = 20;
+
+        private double scale = 100;
         
         public Form1()
         {
@@ -40,7 +42,15 @@ namespace Engine3D
                 MinZ = svvNearPlane,
                 MaxZ = svvFarPlane
             };
-            _camera = new Camera(new OrthographicProjectionMatrix(),new OrthographicNormalizeMatrix(), _svvSettings, pictureBox1);                    
+            _camera = new Camera(new CameraParameters
+            {
+                ProjectionMatrix = new OrthographicProjectionMatrix(),
+                NormalizableMatrix = new OrthographicNormalizeMatrix(),
+                SvvSettings = _svvSettings,
+                Canvas = pictureBox1,
+                Scale = 100f
+            }
+                );                    
         }
         
         private void открытьToolStripMenuItem_Click(object sender, EventArgs e)

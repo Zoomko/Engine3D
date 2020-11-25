@@ -25,7 +25,7 @@ namespace Engine3D
             _backward = new Vector(0, 0, -1);
             _left = new Vector(-1, 0, 0);
 
-            _position = new Vector(0, 0, 0);            
+            _position = new Vector(0, -10, -10);            
         }
         
         public Vector Position { get => _position; set => _position = value; }

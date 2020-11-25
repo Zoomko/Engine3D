@@ -11,27 +11,27 @@ namespace Engine3D
     public class Camera
     {        
         private Model _model;
+
         private ViewPointMatrix vpMatrix;
-        private IProjectableMatrix _projectionMatrix;
-        private INormalizableMatrix _normalizableMatrix;
+        private CameraParameters _parameters;
+        
         private Transform _transform;
         private Graphics _graphics;
-        private PictureBox _canvas;
-        private svvSettings _svvSettings;
-        
-        public Camera(IProjectableMatrix projectionMatrix, INormalizableMatrix normalMatrix, svvSettings settings, PictureBox pictureBox)
+
+        private double _minSide;        
+       
+        public Camera(CameraParameters parameters)
         {
             _transform = new Transform();
             vpMatrix = new ViewPointMatrix(_transform);
-            _projectionMatrix = projectionMatrix;
-            _normalizableMatrix = normalMatrix;
-            _canvas = pictureBox;
-            _svvSettings = settings;
-            
-            _graphics = pictureBox.CreateGraphics();
+            _parameters = parameters;
 
-            _normalizableMatrix.Settings = settings;
-            _normalizableMatrix.SetMatrix();
+            _minSide = (parameters.Canvas.Height < parameters.Canvas.Width ? parameters.Canvas.Height : parameters.Canvas.Width) /2;
+            
+            _graphics = _parameters.Canvas.CreateGraphics();
+
+            _parameters.NormalizableMatrix.Settings = _parameters.SvvSettings;
+            _parameters.NormalizableMatrix.SetMatrix();
         }
         
         public Model Model { get => _model; set => _model = value; }                
@@ -42,10 +42,21 @@ namespace Engine3D
             foreach (var vertex in _model.Vertices)
             {                
                 var camPoint = vpMatrix.TransformToViewPoint(vertex);
-                var normPoint = _normalizableMatrix.Normalize(camPoint);
-                var pointOnScreen = _projectionMatrix.Project(normPoint);
-                _graphics.FillEllipse(new SolidBrush(Color.Black), pointOnScreen.X * _canvas.Height / 2, pointOnScreen.Y * _canvas.Height / 2, 2, 2);
+                var normPoint = _parameters.NormalizableMatrix.Normalize(camPoint);
+                var pointOnScreen = _parameters.ProjectionMatrix.Project(normPoint);
+
+                ////scaling point
+                //pointOnScreen.X *= _parameters.Scale;
+                //pointOnScreen.Y *= _parameters.Scale;
+
+                //align point with cetner
+                pointOnScreen.X = _parameters.Canvas.Width / 2 + (pointOnScreen.X * (float)_minSide);
+                pointOnScreen.Y = _parameters.Canvas.Height / 2 + (pointOnScreen.Y * (float)_minSide);
+
+                if(normPoint.Z>-1 && normPoint.Z <1)
+                    _graphics.FillEllipse(new SolidBrush(Color.Black), pointOnScreen.X, pointOnScreen.Y, 2, 2);
             }
         }
+        
     }
 }
