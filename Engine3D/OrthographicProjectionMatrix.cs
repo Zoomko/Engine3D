@@ -17,10 +17,10 @@ namespace Engine3D
             {0, 0, 0, 1}
         });
 
-        public Point Project(Vector vec)
+        public PointF Project(Vector vec)
         {
             var result = OperataionHelper.MultiplyMatrixByVector(_orthographicMatrix, vec);
-            return new Point((int)result.X, (int)result.Y);
+            return new PointF((float)result.X, (float)result.Y);
         }
     }
 }

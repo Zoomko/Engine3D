@@ -28,14 +28,8 @@ namespace Engine3D
         {
 
         }
-        public void SetMatrix(List<Vector> vert)
-        {
-            MinX = vert.Min(x => x.X);
-            MaxX = vert.Max(x => x.X);
-            MinY = vert.Min(x => x.Y);
-            MaxY = vert.Max(x => x.Y);
-            MinZ = vert.Min(x => x.Z);
-            MaxZ = vert.Max(x => x.Z);
+        public void SetMatrix()
+        {            
 
             _orthographicMatrix = new Matrix(4, 4, new double[4, 4]
             {

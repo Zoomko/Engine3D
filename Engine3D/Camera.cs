@@ -13,19 +13,34 @@ namespace Engine3D
         private Model _model;
         private ViewPointMatrix vpMatrix;
         private IProjectableMatrix _projectionMatrix;
+        private INormalizableMatrix _normalizableMatrix;
         private Transform _transform;
         private Graphics _graphics;
-        private PictureBox _canvas;        
-        public Camera(IProjectableMatrix matrix, PictureBox pictureBox)
+        private PictureBox _canvas;
+
+        private double _nearPlane = 1;
+        private double _farPlane = 100;
+        public Camera(IProjectableMatrix projectionMatrix, INormalizableMatrix normalMatrix, PictureBox pictureBox)
         {
             _transform = new Transform();
             vpMatrix = new ViewPointMatrix(_transform);
-            _projectionMatrix = matrix;
+            _projectionMatrix = projectionMatrix;
+            _normalizableMatrix = normalMatrix;
             _canvas = pictureBox;
             
             _graphics = pictureBox.CreateGraphics();
+            SetCCV();
         }
-
+        private void SetCCV()
+        {
+            _normalizableMatrix.MinX = -30;
+            _normalizableMatrix.MaxX = 30;
+            _normalizableMatrix.MinY = -30;
+            _normalizableMatrix.MaxY = 30;
+            _normalizableMatrix.MinZ = _nearPlane;
+            _normalizableMatrix.MaxZ = _farPlane;
+            _normalizableMatrix.SetMatrix();
+        }
         public Model Model { get => _model; set => _model = value; }                
 
         public void Render()
@@ -34,8 +49,9 @@ namespace Engine3D
             foreach (var vertex in _model.Vertices)
             {                
                 var camPoint = vpMatrix.TransformToViewPoint(vertex);
-                var pointOnScreen = _projectionMatrix.Project(camPoint);
-                _graphics.FillEllipse(new SolidBrush(Color.Black), pointOnScreen.X, pointOnScreen.Y, 2, 2);
+                var normPoint = _normalizableMatrix.Normalize(camPoint);
+                var pointOnScreen = _projectionMatrix.Project(normPoint);
+                _graphics.FillEllipse(new SolidBrush(Color.Black), pointOnScreen.X * _canvas.Height / 2, pointOnScreen.Y * _canvas.Height / 2, 2, 2);
             }
         }
     }

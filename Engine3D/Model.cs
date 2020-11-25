@@ -9,11 +9,7 @@ namespace Engine3D
     public class Model
     {
         private List<Vector> _vertices = new List<Vector>();
-        private List<Polygon> _polygons = new List<Polygon>();        
-
-        private INormalizableMatrix _normalizableMatrix;       
-
-        public INormalizableMatrix NormalizableMatrix { get => _normalizableMatrix; set => _normalizableMatrix = value; }        
+        private List<Polygon> _polygons = new List<Polygon>();                 
         public List<Vector> Vertices { get => _vertices; set => _vertices = value; }
 
         public Model(List<Vector> vertices, List<Polygon> polygons)

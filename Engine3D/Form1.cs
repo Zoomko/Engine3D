@@ -25,7 +25,7 @@ namespace Engine3D
 
         private void InitializeAdditionalComponents()
         {
-            _camera = new Camera(new OrthographicProjectionMatrix(),pictureBox1);                    
+            _camera = new Camera(new OrthographicProjectionMatrix(),new OrthographicNormalizeMatrix(), pictureBox1);                    
         }
         
         private void открытьToolStripMenuItem_Click(object sender, EventArgs e)

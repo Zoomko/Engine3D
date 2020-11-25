@@ -15,11 +15,11 @@ namespace Engine3D
 
         Vector Normalize(Vector vec);
 
-        void SetMatrix(List<Vector> vert);
+        void SetMatrix();
     }
     public interface IProjectableMatrix
     {
-        Point Project(Vector vec);
+        PointF Project(Vector vec);
     }
     
 }
