@@ -10,9 +10,9 @@ namespace Engine3D
     {
         #region RotationBasisVectors
 
-        private Vector _up;
-        private Vector _forward;
-        private Vector _right;
+        private Vector _down;
+        private Vector _backward;
+        private Vector _left;
 
         #endregion
 
@@ -21,16 +21,16 @@ namespace Engine3D
 
         public Transform()
         {
-            _up = new Vector(0, -1, 0);
-            _forward = new Vector(0, 0, -1);
-            _right = new Vector(-1, 0, 0);
+            _down = new Vector(0, -1, 0);
+            _backward = new Vector(0, 0, -1);
+            _left = new Vector(-1, 0, 0);
 
-            _position = new Vector(-10, -30, -10);            
+            _position = new Vector(0, 0, 0);            
         }
         
         public Vector Position { get => _position; set => _position = value; }
-        public Vector Forward { get => _forward; set => _forward = value; }
-        public Vector Right { get => _right; set => _right = value; }
-        public Vector Up { get => _up; set => _up = value; }
+        public Vector Backward { get => _backward; set => _backward = value; }
+        public Vector Left { get => _left; set => _left = value; }
+        public Vector Down { get => _down; set => _down = value; }
     }
 }

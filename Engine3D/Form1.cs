@@ -16,6 +16,12 @@ namespace Engine3D
     public partial class Form1 : Form
     {
         private Camera _camera;
+        private svvSettings _svvSettings;
+
+        private double svvSideX = 15;
+        private double svvSideY = 15;
+        private double svvNearPlane = 1;
+        private double svvFarPlane = 20;
         
         public Form1()
         {
@@ -25,7 +31,16 @@ namespace Engine3D
 
         private void InitializeAdditionalComponents()
         {
-            _camera = new Camera(new OrthographicProjectionMatrix(),new OrthographicNormalizeMatrix(), pictureBox1);                    
+            _svvSettings = new svvSettings()
+            {
+                MinX = -svvSideX,
+                MaxX = svvSideX,
+                MinY = -svvSideY,
+                MaxY = svvSideY,
+                MinZ = svvNearPlane,
+                MaxZ = svvFarPlane
+            };
+            _camera = new Camera(new OrthographicProjectionMatrix(),new OrthographicNormalizeMatrix(), _svvSettings, pictureBox1);                    
         }
         
         private void открытьToolStripMenuItem_Click(object sender, EventArgs e)

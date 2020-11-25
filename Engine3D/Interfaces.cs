@@ -6,12 +6,7 @@ namespace Engine3D
     public interface INormalizableMatrix
     {       
 
-        double MinX { get; set; }
-        double MaxX { get; set; }
-        double MinY { get; set; }
-        double MaxY { get; set; }
-        double MinZ { get; set; }
-        double MaxZ { get; set; }
+        svvSettings Settings { get; set; }
 
         Vector Normalize(Vector vec);
 

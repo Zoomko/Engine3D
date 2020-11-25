@@ -15,7 +15,8 @@ namespace Engine3D
         
         public static Model OpenFile()
         {            
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            OpenFileDialog openFileDialog = new OpenFileDialog();            
+            openFileDialog.Filter = "obj files (*.obj)|*.obj|All files (*.*)|*.*";
 
             Model model = new Model();
             List<Vector> vertices = new List<Vector>();

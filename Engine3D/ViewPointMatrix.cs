@@ -15,13 +15,14 @@ namespace Engine3D
             _transform = transform;
             InitMatrix();
         }
+        
         public void InitMatrix()
         {
             _transformMatrix = new Matrix(4, 4, new double[4, 4]
             {
-                {_transform.Right.X,    _transform.Right.Y,     _transform.Right.Z,     -_transform.Position.X },
-                {_transform.Up.X,       _transform.Up.Y,        _transform.Up.Z,        -_transform.Position.Y },
-                {_transform.Forward.X,  _transform.Forward.Y,   _transform.Forward.Z,   -_transform.Position.Z },
+                {_transform.Left.X,    _transform.Left.Y,     _transform.Left.Z,     -_transform.Position.X },
+                {_transform.Down.X,       _transform.Down.Y,      _transform.Down.Z,        -_transform.Position.Y },
+                {_transform.Backward.X,  _transform.Backward.Y,   _transform.Backward.Z,   -_transform.Position.Z },
                 {0,                     0,                      0,                      1 }
             });
         }
