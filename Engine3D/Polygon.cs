@@ -8,10 +8,11 @@ namespace Engine3D
 {
     public class Polygon
     {
-        private List<Triangle> _triangles = new List<Triangle>();
-        public Polygon(List<Triangle> triangle)
+        private List<Vector>  _vertices = new List<Vector>();
+        public List<Vector> Vertices { get => _vertices; }
+        public Polygon(List<Vector> vertices)
         {
-            _triangles = triangle;
+            _vertices = vertices;
         }
     }
 }

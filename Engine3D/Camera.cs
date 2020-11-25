@@ -22,7 +22,7 @@ namespace Engine3D
        
         public Camera(CameraParameters parameters)
         {
-            _transform = new Transform();
+            _transform = new Transform(new Vector(0,-10,-10));
             vpMatrix = new ViewPointMatrix(_transform);
             _parameters = parameters;
 
@@ -38,24 +38,28 @@ namespace Engine3D
 
         public void Render()
         {
+            Pen pen = new Pen(Color.Black);
             _graphics.Clear(Color.White);
-            foreach (var vertex in _model.Vertices)
-            {                
-                var camPoint = vpMatrix.TransformToViewPoint(vertex);
-                var normPoint = _parameters.NormalizableMatrix.Normalize(camPoint);
-                var pointOnScreen = _parameters.ProjectionMatrix.Project(normPoint);
-
-                ////scaling point
-                //pointOnScreen.X *= _parameters.Scale;
-                //pointOnScreen.Y *= _parameters.Scale;
-
-                //align point with cetner
-                pointOnScreen.X = _parameters.Canvas.Width / 2 + (pointOnScreen.X * (float)_minSide);
-                pointOnScreen.Y = _parameters.Canvas.Height / 2 + (pointOnScreen.Y * (float)_minSide);
-
-                if(normPoint.Z>-1 && normPoint.Z <1)
-                    _graphics.FillEllipse(new SolidBrush(Color.Black), pointOnScreen.X, pointOnScreen.Y, 2, 2);
+            foreach (var polygon in _model.Polygons)
+            {
+                PointF[] points = new PointF[polygon.Vertices.Count];
+                for (int i = 0; i < polygon.Vertices.Count; i++)
+                {                    
+                     points[i] = GetPointOnScreen(polygon.Vertices[i]);      
+                    
+                }
+                _graphics.DrawPolygon(pen, points);
             }
+        }
+        private PointF GetPointOnScreen(Vector vector)
+        {
+            var camPoint = vpMatrix.TransformToViewPoint(vector);
+            var normPoint = _parameters.NormalizableMatrix.Normalize(camPoint);
+            var pointOnScreen = _parameters.ProjectionMatrix.Project(normPoint);
+
+            pointOnScreen.X = _parameters.Canvas.Width / 2 + (pointOnScreen.X * (float)_minSide);
+            pointOnScreen.Y = _parameters.Canvas.Height / 2 + (pointOnScreen.Y * (float)_minSide);
+            return pointOnScreen;
         }
         
     }

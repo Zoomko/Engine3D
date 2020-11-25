@@ -20,8 +20,8 @@ namespace Engine3D
 
         private double svvSideX = 30;
         private double svvSideY = 30;
-        private double svvNearPlane = 1;
-        private double svvFarPlane = 20;
+        private double svvNearPlane = 0.1;
+        private double svvFarPlane = 100;
 
         private double scale = 100;
         

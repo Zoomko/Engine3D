@@ -67,40 +67,27 @@ namespace Engine3D
 
         private static Polygon GetPolygonFromStringValues(string[] values, List<Vector> vertices)
         {
-            List<Triangle> triangles = new List<Triangle>();
+            List<Vector> verticesPolygan = new List<Vector>();
             for (int i = 1; i <values.Length; i++)
             {
                 var triangleValues = values[i].Split('/');
 
-                int a_index, b_index, c_index;
+                int index = int.Parse(triangleValues[0]);               
 
-                if (triangleValues.Length == 3)
-                {
-                    a_index = int.Parse(triangleValues[0]);
-                    b_index = int.Parse(triangleValues[1]);
-                    c_index = int.Parse(triangleValues[2]);
-                }
-                else
-                    throw new Exception("количество вершин не равно 3");
-
-                Vector a = new Vector();
-                Vector b = new Vector();
-                Vector c = new Vector();
+                Vector vector = new Vector();              
 
                 try
                 {
-                    a = vertices[a_index - 1];
-                    b = vertices[a_index - 1];
-                    c = vertices[a_index - 1];
+                    vector = vertices[index - 1];                    
                 }
                 catch(ArgumentOutOfRangeException e)
                 {
-                    throw new Exception(e.Message);
+                    throw new Exception($"index = {index - 1}, length = {vertices.Count}");
                 }
 
-                triangles.Add(new Triangle(a, b, c));
+                verticesPolygan.Add(vector);
             }
-            return new Polygon(triangles);
+            return new Polygon(verticesPolygan);
         }
 
     }

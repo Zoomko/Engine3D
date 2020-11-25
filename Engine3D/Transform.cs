@@ -19,13 +19,13 @@ namespace Engine3D
         private Vector _position;
         private Matrix _transformMatrix;
 
-        public Transform()
+        public Transform(Vector position)
         {
             _down = new Vector(0, -1, 0);
             _backward = new Vector(0, 0, -1);
             _left = new Vector(-1, 0, 0);
 
-            _position = new Vector(0, -10, -10);            
+            _position = position;            
         }
         
         public Vector Position { get => _position; set => _position = value; }

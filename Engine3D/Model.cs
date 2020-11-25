@@ -9,8 +9,10 @@ namespace Engine3D
     public class Model
     {
         private List<Vector> _vertices = new List<Vector>();
-        private List<Polygon> _polygons = new List<Polygon>();                 
-        public List<Vector> Vertices { get => _vertices; set => _vertices = value; }
+        private List<Polygon> _polygons = new List<Polygon>();
+        private Transform _transform;        
+        public Transform Transform { get => _transform; set => _transform = value; }
+        public List<Polygon> Polygons { get => _polygons; set => _polygons = value; }
 
         public Model(List<Vector> vertices, List<Polygon> polygons)
         {
