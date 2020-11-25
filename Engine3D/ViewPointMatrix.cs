@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace Engine3D
 {
-    public class VeiwPointMatrix
+    public class ViewPointMatrix
     {
         private Matrix _transformMatrix;
         private Transform _transform;
-        public VeiwPointMatrix(Transform transform)
+        public ViewPointMatrix(Transform transform)
         {
             _transform = transform;
+            InitMatrix();
         }
         public void InitMatrix()
         {

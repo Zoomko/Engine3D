@@ -39,10 +39,10 @@ namespace Engine3D
 
             _orthographicMatrix = new Matrix(4, 4, new double[4, 4]
             {
-            {2/(MaxX-MinX), 0, 0, -(MaxX +MinX)/(MaxX -MinX)},
-            {0, 2/(MaxY-MinY), 0,-(MaxY +MinY)/(MaxY -MinY)},
-            {0, 0, 2/(MaxZ-MinZ), -(MaxZ +MinZ)/(MaxZ -MinZ)},
-            {0, 0, 0, 1}
+            {2/(MaxX-MinX),         0,                   0,                 -(MaxX +MinX)/(MaxX -MinX)},
+            {0,                     2/(MaxY-MinY),       0,                 -(MaxY +MinY)/(MaxY -MinY)},
+            {0,                     0,                   2/(MaxZ-MinZ),     -(MaxZ +MinZ)/(MaxZ -MinZ)},
+            {0,                     0,                   0,                 1}
             });
             
         }

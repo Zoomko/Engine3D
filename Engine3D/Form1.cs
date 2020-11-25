@@ -16,6 +16,7 @@ namespace Engine3D
     public partial class Form1 : Form
     {
         private Camera _camera;
+        
         public Form1()
         {
             InitializeComponent();
@@ -24,14 +25,13 @@ namespace Engine3D
 
         private void InitializeAdditionalComponents()
         {
-            _camera = new Camera();
-            
-            Paint += _camera.PaintEvent;           
+            _camera = new Camera(new OrthographicProjectionMatrix(),pictureBox1);                    
         }
         
         private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _camera.Model = ObjReader.OpenFile();
+            _camera.Render();
         }      
 
     }
