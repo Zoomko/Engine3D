@@ -32,16 +32,19 @@ namespace Engine3D
                         string line;
                         while ((line = sr.ReadLine()) != null)
                         {
-                            var values = line.Split(' ');
-                            var id = values.First();
+                            var values = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            if (values.Length > 0)
+                            {
+                                var id = values.First();
 
-                            if (id == "v")
-                            {
-                                vertices.Add(GetVectorFromStringValues(values));
-                            }
-                            else if(id == "f")
-                            {
-                                polygons.Add(GetPolygonFromStringValues(values,vertices));
+                                if (id == "v")
+                                {
+                                    vertices.Add(GetVectorFromStringValues(values));
+                                }
+                                else if (id == "f")
+                                {
+                                    polygons.Add(GetPolygonFromStringValues(values, vertices));
+                                }
                             }
                         }
                     }
@@ -70,22 +73,25 @@ namespace Engine3D
             List<Vector> verticesPolygan = new List<Vector>();
             for (int i = 1; i <values.Length; i++)
             {
-                var triangleValues = values[i].Split('/');
+                var triangleValues = values[i].Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
-                int index = int.Parse(triangleValues[0]);               
-
-                Vector vector = new Vector();              
-
-                try
+                if (triangleValues.Length > 0)
                 {
-                    vector = vertices[index - 1];                    
-                }
-                catch(ArgumentOutOfRangeException e)
-                {
-                    throw new Exception($"index = {index - 1}, length = {vertices.Count}");
-                }
+                    int index = int.Parse(triangleValues[0]);
 
-                verticesPolygan.Add(vector);
+                    Vector vector = new Vector();
+
+                    try
+                    {
+                        vector = vertices[index - 1];
+                    }
+                    catch (ArgumentOutOfRangeException e)
+                    {
+                        throw new Exception($"index = {index - 1}, length = {vertices.Count}");
+                    }
+
+                    verticesPolygan.Add(vector);
+                }
             }
             return new Polygon(verticesPolygan);
         }

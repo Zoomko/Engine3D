@@ -44,5 +44,10 @@ namespace Engine3D
         {
             return !(vec1 == vec2);
         }
+
+        public static double DotProduct(Vector vec1, Vector vec2)
+        {
+            return vec1.X * vec2.X + vec1.Y * vec2.Y + vec1.Z * vec2.Z + vec1.W * vec2.W;
+        }
     }
 }
