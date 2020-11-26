@@ -56,9 +56,18 @@ namespace Engine3D
                 _currentDegreeY += deltaY;
                 _transform.Position.Y = _verticalRadius * Math.Sin(_currentDegreeY);
                 _horizontalRadius = _verticalRadius * Math.Cos(_currentDegreeY);
+
+                //_transform.Left = Operataion.RotateX(_transform.Left, CurrentDegreeY);
+                //_transform.Backward = Operataion.RotateX(_transform.Backward, CurrentDegreeY);
+                //_transform.Down = Operataion.RotateX(_transform.Down, CurrentDegreeY);
             }
+
             _transform.Position.X = _horizontalRadius * Math.Cos(_currentDegreeX);
             _transform.Position.Z = _horizontalRadius * Math.Sin(_currentDegreeX);
+
+            _transform.Left = Operataion.RotateY(_transform.Left, deltaX);
+            _transform.Backward = Operataion.RotateY(_transform.Backward, deltaX);
+            _transform.Down = Operataion.RotateY(_transform.Down, deltaX);
             vpMatrix.InitMatrix();
         }
 
