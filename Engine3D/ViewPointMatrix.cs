@@ -28,7 +28,7 @@ namespace Engine3D
         }
         public Vector TransformToViewPoint(Vector vector)
         {
-            var result = OperataionHelper.MultiplyMatrixByVector(_transformMatrix, vector);
+            var result = Operataion.MultiplyMatrixByVector(_transformMatrix, vector);
             return result;
         }
     }

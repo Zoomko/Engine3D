@@ -58,9 +58,9 @@ namespace Engine3D
 
         private static Vector GetVectorFromStringValues(string[] values)
         {
-            var x = double.Parse(values[1],System.Globalization.NumberStyles.AllowLeadingSign | System.Globalization.NumberStyles.AllowDecimalPoint);
-            var y = double.Parse(values[2], System.Globalization.NumberStyles.AllowLeadingSign | System.Globalization.NumberStyles.AllowDecimalPoint);
-            var z = double.Parse(values[3], System.Globalization.NumberStyles.AllowLeadingSign | System.Globalization.NumberStyles.AllowDecimalPoint);
+            var x = double.Parse(values[1],System.Globalization.NumberStyles.AllowLeadingSign | System.Globalization.NumberStyles.AllowDecimalPoint| System.Globalization.NumberStyles.AllowLeadingWhite);
+            var y = double.Parse(values[2], System.Globalization.NumberStyles.AllowLeadingSign | System.Globalization.NumberStyles.AllowDecimalPoint | System.Globalization.NumberStyles.AllowLeadingWhite);
+            var z = double.Parse(values[3], System.Globalization.NumberStyles.AllowLeadingSign | System.Globalization.NumberStyles.AllowDecimalPoint | System.Globalization.NumberStyles.AllowLeadingWhite);
             
             return new Vector(x, y, z);
         }

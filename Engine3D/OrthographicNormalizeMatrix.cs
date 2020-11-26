@@ -33,7 +33,7 @@ namespace Engine3D
         }
         public Vector Normalize(Vector vec)
         {
-            var result = OperataionHelper.MultiplyMatrixByVector(_orthographicMatrix,vec);
+            var result = Operataion.MultiplyMatrixByVector(_orthographicMatrix,vec);
             return result;
         }
     }

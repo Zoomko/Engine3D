@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Engine3D
 {
-    public static class OperataionHelper
+    public static class Operataion
     {
         public static Matrix MultiplyMatrixes(Matrix one, Matrix other)
         {            

@@ -52,7 +52,7 @@ namespace TestEngine3D
             Vector vector = new Vector(1, 4, 5);
             Matrix matrix = new Matrix(4, 4, new double[4, 4] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 1, 2, 3 }, { 4, 5, 6, 7 } });
             Vector expected = new Vector(70, 36, 47, 58);
-            Vector result = OperataionHelper.MultiplyVectorByMatrix(vector,matrix);
+            Vector result = Operataion.MultiplyVectorByMatrix(vector,matrix);
 
             Assert.IsTrue(expected == result);
         }
@@ -63,7 +63,7 @@ namespace TestEngine3D
             Vector vector = new Vector(1, 4, 5);
             Matrix matrix = new Matrix(4, 4, new double[4, 4] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 1, 2, 3 }, { 4, 5, 6, 7 } });
             Vector expected = new Vector(28, 72, 26 , 61);
-            Vector result = OperataionHelper.MultiplyMatrixByVector(matrix, vector);
+            Vector result = Operataion.MultiplyMatrixByVector(matrix, vector);
 
             Assert.IsTrue(expected == result);
         }
