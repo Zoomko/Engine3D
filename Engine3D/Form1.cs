@@ -92,11 +92,8 @@ namespace Engine3D
                 var deltaX = (e.X - _mousePostitionX) * deltaScale;
                 var deltaY = (e.Y - _mousePostitionY) * deltaScale;
                 _camera.TranslateByDegree(deltaX, deltaY);
-                _camera.Render();
-                             
-                label1.Text = _camera.CurrentDegreeX.ToString();
-                label2.Text = _camera.CurrentDegreeY.ToString();
-                label3.Text = _camera.Transform.Position.Z.ToString();
+                _camera.Render();                        
+                
 
                 SetMousePosition(e);
             }

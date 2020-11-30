@@ -19,7 +19,7 @@ namespace Engine3D
         private Graphics _graphics;
 
         private double _currentDegreeX = 0;
-        private double _currentDegreeY = 0;
+        private double degreeY = 170;
 
         private double _minSide;      
         
@@ -42,28 +42,24 @@ namespace Engine3D
 
             _parameters.NormalizableMatrix.Settings = _parameters.SvvSettings;
             _parameters.NormalizableMatrix.SetMatrix();
+            RotateOnInit();
         }
         public double CurrentDegreeX { get => _currentDegreeX; }
         public Model Model { get => _model; set => _model = value; }
         public Transform Transform { get => _transform; }
-        public double CurrentDegreeY { get => _currentDegreeY;}
+        
+
+        public void RotateOnInit()
+        {
+            _transform.Left = Operataion.RotateX(_transform.Left, degreeY);
+            _transform.Backward = Operataion.RotateX(_transform.Backward, degreeY);
+            _transform.Down = Operataion.RotateX(_transform.Down, degreeY);
+            vpMatrix.InitMatrix();
+        }
 
         public void TranslateByDegree(double deltaX, double deltaY)
         {
-            _currentDegreeX += deltaX;
-            if (((_currentDegreeY + deltaY) < Math.PI / 2) && ((_currentDegreeY + deltaY) > -(Math.PI / 2)))
-            {
-                _currentDegreeY += deltaY;
-                _transform.Position.Y = _verticalRadius * Math.Sin(_currentDegreeY);
-                _horizontalRadius = _verticalRadius * Math.Cos(_currentDegreeY);
-
-                //_transform.Left = Operataion.RotateX(_transform.Left, CurrentDegreeY);
-                //_transform.Backward = Operataion.RotateX(_transform.Backward, CurrentDegreeY);
-                //_transform.Down = Operataion.RotateX(_transform.Down, CurrentDegreeY);
-            }
-
-            _transform.Position.X = _horizontalRadius * Math.Cos(_currentDegreeX);
-            _transform.Position.Z = _horizontalRadius * Math.Sin(_currentDegreeX);
+            _currentDegreeX += deltaX; 
 
             _transform.Left = Operataion.RotateY(_transform.Left, deltaX);
             _transform.Backward = Operataion.RotateY(_transform.Backward, deltaX);
@@ -92,7 +88,7 @@ namespace Engine3D
                 int colorV = (int)(colorValue * 255);
                 Color color = Color.FromArgb(colorV, colorV, colorV);
 
-                if(zValue>-1 && zValue<1)
+                
                 _graphics.FillPolygon(new SolidBrush(color), points);
             }
         }
