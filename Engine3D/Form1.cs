@@ -25,10 +25,10 @@ namespace Engine3D
 
         private readonly double _svvSideX = 30;
         private readonly double _svvSideY = 30;
-        private readonly double _svvNearPlane = 0.1;
-        private readonly double _svvFarPlane = 15;       
+        private readonly double _svvNearPlane = 0;
+        private readonly double _svvFarPlane = 25;       
 
-        private readonly double _radiusSphere = 10;
+        private readonly double _radiusSphere = 17;
         
         public Form1()
         {

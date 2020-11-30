@@ -19,7 +19,7 @@ namespace Engine3D
         private Graphics _graphics;
 
         private double _currentDegreeX = 0;
-        private double degreeY = 170;
+        private double degreeY = 50;
 
         private double _minSide;      
         
@@ -33,7 +33,7 @@ namespace Engine3D
             _horizontalRadius = parameters.Radius;
             _verticalRadius = parameters.Radius;
 
-            _transform = new Transform(new Vector(0, -parameters.Radius, 0)); ;
+            _transform = new Transform(new Vector(0, 5, -parameters.Radius)); ;
             vpMatrix = new ViewPointMatrix(_transform);            
 
             _minSide = (parameters.Canvas.Height < parameters.Canvas.Width ? parameters.Canvas.Height : parameters.Canvas.Width) /2;
@@ -68,28 +68,28 @@ namespace Engine3D
         }
 
         public void Render()
-        {            
+        {
             _graphics.Clear(Color.White);
             foreach (var polygon in _model.Polygons)
             {
-                PointF[] points = new PointF[polygon.Vertices.Count];
+                
                 double zValue = 0;
                 for (int i = 0; i < polygon.Vertices.Count; i++)
                 {
                     var normPoint = GetNormilizedPoint(polygon.Vertices[i]);
                     zValue += normPoint.Z;
-                    points[i] = GetPointOnScreen(normPoint);                    
-                    
+                    polygon.Points[i] = GetPointOnScreen(normPoint);
+
                 }
                 zValue /= polygon.Vertices.Count;
 
-                double colorValue = zValue > 1 ? 1 : zValue;
-                colorValue = colorValue < 0 ? 0 : colorValue;
-                int colorV = (int)(colorValue * 255);
-                Color color = Color.FromArgb(colorV, colorV, colorV);
+                polygon.ValueMidZ = zValue;
 
-                
-                _graphics.FillPolygon(new SolidBrush(color), points);
+            }
+            _model.Polygons = _model.Polygons.OrderByDescending(x => x.ValueMidZ).ToList();
+            foreach (var polygon in _model.Polygons)
+            {                
+                _graphics.FillPolygon(new SolidBrush(polygon.GetColorByZValue()), polygon.Points);
             }
         }
         private Vector GetNormilizedPoint(Vector vector)
