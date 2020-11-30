@@ -33,7 +33,7 @@ namespace Engine3D
             _horizontalRadius = parameters.Radius;
             _verticalRadius = parameters.Radius;
 
-            _transform = new Transform(new Vector(0, 5, -parameters.Radius)); ;
+            _transform = new Transform(new Vector(0, -5, -parameters.Radius)); ;
             vpMatrix = new ViewPointMatrix(_transform);            
 
             _minSide = (parameters.Canvas.Height < parameters.Canvas.Width ? parameters.Canvas.Height : parameters.Canvas.Width) /2;
