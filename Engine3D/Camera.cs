@@ -87,10 +87,14 @@ namespace Engine3D
 
             }
             _model.Polygons = _model.Polygons.OrderByDescending(x => x.ValueMidZ).ToList();
-            foreach (var polygon in _model.Polygons)
+            using (SolidBrush brush = new SolidBrush(Color.Black))
             {                
-                _graphics.FillPolygon(new SolidBrush(polygon.GetColorByZValue()), polygon.Points);
-            }
+                foreach (var polygon in _model.Polygons)
+                {
+                    brush.Color = polygon.GetColorByZValue();
+                    _graphics.FillPolygon(brush, polygon.Points);
+                }
+            }            
         }
         private Vector GetNormilizedPoint(Vector vector)
         {
