@@ -11,9 +11,10 @@ namespace Engine3D
     {
         private List<Vector> _vertices = new List<Vector>();
         public List<Vector> Vertices { get => _vertices; }
-        PointF[] _points;
-        public PointF[] Points { get => _points;}
+        PointF[] _points;        
+        public PointF[] Points { get => _points;}        
         public double ValueMidZ { get; set; }
+        public PointF MiddlePoint { get; set; }
 
         private Vector _poligonSide = new Vector(0, 0);
         private Vector _pointVector = new Vector(0, 0);        
@@ -28,7 +29,7 @@ namespace Engine3D
         public Polygon(List<Vector> vertices)
         {
             _vertices = vertices;
-            _points = new PointF[vertices.Count];
+            _points = new PointF[vertices.Count];            
         }
 
         public bool IsPolygonBehind(Polygon polygon)

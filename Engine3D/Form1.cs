@@ -29,7 +29,9 @@ namespace Engine3D
         private readonly double _svvFarPlane = 25;       
 
         private readonly double _radiusSphere = 17;
-        
+        private double coefficient;
+
+
         public Form1()
         {
             InitializeComponent();
@@ -38,6 +40,7 @@ namespace Engine3D
 
         private void InitializeAdditionalComponents()
         {
+            coefficient = trackBar1.Value;
             _svvSettings = new svvSettings()
             {
                 MinX = -_svvSideX,
@@ -68,7 +71,7 @@ namespace Engine3D
         private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _camera.Model = ObjReader.OpenFile();
-            _camera.Render();
+            _camera.Render(coefficient);
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -92,7 +95,7 @@ namespace Engine3D
                 var deltaX = (e.X - _mousePostitionX) * deltaScale;
                 var deltaY = (e.Y - _mousePostitionY) * deltaScale;
                 _camera.TranslateByDegree(deltaX, deltaY);
-                _camera.Render();                        
+                _camera.Render(coefficient);                        
                 
 
                 SetMousePosition(e);
@@ -104,6 +107,17 @@ namespace Engine3D
         private void pictureBox1_MouseLeave(object sender, EventArgs e)
         {
             _buttonIsPressed = false;
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void trackBar1_ValueChanged(object sender, EventArgs e)
+        {
+            coefficient = trackBar1.Value;
+            _camera.Render(coefficient);
         }
     }
 }

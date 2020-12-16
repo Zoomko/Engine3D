@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Threading;
+using System.Diagnostics;
 
 namespace Engine3D
 {
@@ -25,6 +27,8 @@ namespace Engine3D
         
         private double _horizontalRadius;
         private readonly double _verticalRadius;
+
+        private ZBuffer _zBuffer;
        
         public Camera(CameraParameters parameters)
         {
@@ -40,15 +44,15 @@ namespace Engine3D
             
             _graphics = _parameters.Canvas.CreateGraphics();
 
+            _zBuffer = new ZBuffer(_graphics);
+
             _parameters.NormalizableMatrix.Settings = _parameters.SvvSettings;
             _parameters.NormalizableMatrix.SetMatrix();
             RotateOnInit();
         }
         public double CurrentDegreeX { get => _currentDegreeX; }
         public Model Model { get => _model; set => _model = value; }
-        public Transform Transform { get => _transform; }
-
-        private List<Polygon> _zBuffer = new List<Polygon>();
+        public Transform Transform { get => _transform; }        
         
 
         public void RotateOnInit()
@@ -69,68 +73,56 @@ namespace Engine3D
             vpMatrix.InitMatrix();
         }
 
-        public void Render()
-        {
+        public void Render(double coof)
+        {           
             _graphics.Clear(Color.White);
+            double minZValue = 9999;
+            double maxZValue = -9999;
             foreach (var polygon in _model.Polygons)
+            {  
+                polygon.ValueMidZ = SetScreenPointsAndGetZValue(polygon);
+
+                if (polygon.ValueMidZ > maxZValue)
+                    maxZValue = polygon.ValueMidZ;
+                if (polygon.ValueMidZ < minZValue)
+                    minZValue = polygon.ValueMidZ; 
+            }
+
+            _model.Polygons = _model.Polygons.OrderByDescending(x => x.ValueMidZ).ToList();
+
+            var midZValue = minZValue + (maxZValue - minZValue)* (coof/100);
+
+            DrawPolygons(midZValue);
+        }
+        
+        private double SetScreenPointsAndGetZValue(Polygon polygon)
+        {
+            double zValue = 0;
+            for (int i = 0; i < polygon.Vertices.Count; i++)
             {
-                
-                double zValue = 0;
-                for (int i = 0; i < polygon.Vertices.Count; i++)
-                {
-                    var normPoint = GetNormilizedPoint(polygon.Vertices[i]);
-                    zValue += normPoint.Z;
-                    polygon.Points[i] = GetPointOnScreen(normPoint);
-
-                }
-                zValue /= polygon.Vertices.Count;
-
-                polygon.ValueMidZ = zValue;
+                var normPoint = GetNormilizedPoint(polygon.Vertices[i]);
+                polygon.Points[i] = GetPointOnScreen(normPoint);
+                zValue += normPoint.Z;
 
             }
-            
-            _model.Polygons = _model.Polygons.OrderBy(x => x.ValueMidZ).ToList();
-            //var first = new Polygon(new List<Vector>() { new Vector(), new Vector(), new Vector(), new Vector()});
-            //first.Points[0] = new PointF(1, 1);
-            //first.Points[1] = new PointF(1, 2);
-            //first.Points[2] = new PointF(2, 2);
-            //first.Points[3] = new PointF(2, 1);
-
-            //var sec = new Polygon(new List<Vector>() { new Vector(), new Vector(), new Vector(), new Vector() });
-            //sec.Points[0] = new PointF(1.1f, 1.1f);
-            //sec.Points[1] = new PointF(1.1f, 1.2f);
-            //sec.Points[2] = new PointF(1.2f, 1.2f);
-            //sec.Points[3] = new PointF(1.2f, 1.1f);
-
-            //first.IsPolygonBehind(sec);
-            _zBuffer.Clear();
-            _zBuffer.Add(_model.Polygons.First());
-            for (int i = 1; i < _model.Polygons.Count(); i++)
-            {
-                bool willRender = true;
-
-                foreach (var renderPolygon in _zBuffer)
-                {
-                    if (renderPolygon.IsPolygonBehind(_model.Polygons[i]))
-                    {
-                        willRender = false;
-                        break;
-                    }
-                }
-                if (willRender)
-                {
-                    _zBuffer.Add(_model.Polygons[i]);
-                }
-            }
-            Console.WriteLine(_zBuffer.Count());
+            zValue /= polygon.Vertices.Count;
+            return zValue;
+        }
+        private void DrawPolygons(double midZValue)
+        {
             using (SolidBrush brush = new SolidBrush(Color.Black))
-            {                
-                foreach (var polygon in _zBuffer)
+            {
+                foreach (Polygon polygon in _model.Polygons)
                 {
-                    brush.Color = polygon.GetColorByZValue();
-                    _graphics.FillPolygon(brush, polygon.Points);
+
+                    if (polygon.ValueMidZ < midZValue)
+                    {
+                        brush.Color = polygon.GetColorByZValue();
+                        _graphics.FillPolygon(brush, polygon.Points);
+                    }
+
                 }
-            }            
+            }
         }
         private Vector GetNormilizedPoint(Vector vector)
         {
