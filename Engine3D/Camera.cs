@@ -47,6 +47,8 @@ namespace Engine3D
         public double CurrentDegreeX { get => _currentDegreeX; }
         public Model Model { get => _model; set => _model = value; }
         public Transform Transform { get => _transform; }
+
+        private List<Polygon> _zBuffer = new List<Polygon>();
         
 
         public void RotateOnInit()
@@ -86,10 +88,44 @@ namespace Engine3D
                 polygon.ValueMidZ = zValue;
 
             }
-            _model.Polygons = _model.Polygons.OrderByDescending(x => x.ValueMidZ).ToList();
+            
+            _model.Polygons = _model.Polygons.OrderBy(x => x.ValueMidZ).ToList();
+            //var first = new Polygon(new List<Vector>() { new Vector(), new Vector(), new Vector(), new Vector()});
+            //first.Points[0] = new PointF(1, 1);
+            //first.Points[1] = new PointF(1, 2);
+            //first.Points[2] = new PointF(2, 2);
+            //first.Points[3] = new PointF(2, 1);
+
+            //var sec = new Polygon(new List<Vector>() { new Vector(), new Vector(), new Vector(), new Vector() });
+            //sec.Points[0] = new PointF(1.1f, 1.1f);
+            //sec.Points[1] = new PointF(1.1f, 1.2f);
+            //sec.Points[2] = new PointF(1.2f, 1.2f);
+            //sec.Points[3] = new PointF(1.2f, 1.1f);
+
+            //first.IsPolygonBehind(sec);
+            _zBuffer.Clear();
+            _zBuffer.Add(_model.Polygons.First());
+            for (int i = 1; i < _model.Polygons.Count(); i++)
+            {
+                bool willRender = true;
+
+                foreach (var renderPolygon in _zBuffer)
+                {
+                    if (renderPolygon.IsPolygonBehind(_model.Polygons[i]))
+                    {
+                        willRender = false;
+                        break;
+                    }
+                }
+                if (willRender)
+                {
+                    _zBuffer.Add(_model.Polygons[i]);
+                }
+            }
+            Console.WriteLine(_zBuffer.Count());
             using (SolidBrush brush = new SolidBrush(Color.Black))
             {                
-                foreach (var polygon in _model.Polygons)
+                foreach (var polygon in _zBuffer)
                 {
                     brush.Color = polygon.GetColorByZValue();
                     _graphics.FillPolygon(brush, polygon.Points);
@@ -109,7 +145,6 @@ namespace Engine3D
             pointOnScreen.X = _parameters.Canvas.Width / 2 + (pointOnScreen.X * (float)_minSide);
             pointOnScreen.Y = _parameters.Canvas.Height / 2 + (pointOnScreen.Y * (float)_minSide);
             return pointOnScreen;
-        }
-        
+        }        
     }
 }

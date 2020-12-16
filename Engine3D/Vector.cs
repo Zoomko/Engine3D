@@ -17,7 +17,20 @@ namespace Engine3D
         public double Y { get => _y; set => _y = value; }
         public double Z { get => _z; set => _z = value; }
         public double W { get => _w; set => _w = value; }
-
+        public Vector()
+        {
+            this._x = 0;
+            this._y = 0;
+            this._z = 0;
+            this._w = 0;
+        }
+        public Vector(double x, double y)
+        {
+            this._x = x;
+            this._y = y;
+            this._z = 0;
+            this._w = 0;
+        }
         public Vector(double x, double y, double z)
         {
             this._x = x;
@@ -31,8 +44,25 @@ namespace Engine3D
             this._y = y;
             this._z = z;
             this._w = w;
+        }        
+
+        public static Vector operator +(Vector vec1, Vector vec2)
+        {
+            return new Vector(vec1.X + vec2.X, vec1.Y + vec2.Y, vec1.Z + vec2.Z);
         }
-        public Vector() { }
+
+        public static Vector operator -(Vector vec1, Vector vec2)
+        {
+            return new Vector(vec1.X - vec2.X, vec1.Y - vec2.Y, vec1.Z - vec2.Z);
+        }
+
+        public Vector VectorProduct(Vector vec)
+        {
+            double i = this.Y * vec.Z - this.Z * vec.Y;
+            double j = this.X * vec.Z - this.Z * vec.X;
+            double k = this.X * vec.Y - this.Y * vec.X;
+            return new Vector(i, j, k);
+        }
 
         public static bool operator ==(Vector vec1, Vector vec2)
         {
