@@ -92,12 +92,9 @@ namespace Engine3D
         {
             if (_buttonIsPressed && _camera.Model != null)
             {
-                var deltaX = (e.X - _mousePostitionX) * deltaScale;
-                var deltaY = (e.Y - _mousePostitionY) * deltaScale;
-                _camera.TranslateByDegree(deltaX, deltaY);
-                _camera.Render(coefficient);                        
-                
-
+                var deltaX = (e.X - _mousePostitionX) * deltaScale;                
+                _camera.TranslateByDegree(deltaX, 0);
+                _camera.Render(coefficient);
                 SetMousePosition(e);
             }
 
@@ -118,6 +115,11 @@ namespace Engine3D
         {
             coefficient = trackBar1.Value;
             _camera.Render(coefficient);
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            
         }
     }
 }

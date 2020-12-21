@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Drawing;
-using System.Windows.Forms;
-using System.Threading;
-using System.Diagnostics;
+
 
 namespace Engine3D
 {
@@ -22,6 +16,9 @@ namespace Engine3D
 
         private double _currentDegreeX = 0;
         private double degreeY = 50;
+
+        private double minZValue = 9999;
+        private double maxZValue = -9999;
 
         private double _minSide;      
         
@@ -74,25 +71,18 @@ namespace Engine3D
         }
 
         public void Render(double coof)
-        {           
-            _graphics.Clear(Color.White);
-            double minZValue = 9999;
-            double maxZValue = -9999;
+        {               
+            ResetValues();
+
             foreach (var polygon in _model.Polygons)
             {  
                 polygon.ValueMidZ = SetScreenPointsAndGetZValue(polygon);
-
-                if (polygon.ValueMidZ > maxZValue)
-                    maxZValue = polygon.ValueMidZ;
-                if (polygon.ValueMidZ < minZValue)
-                    minZValue = polygon.ValueMidZ; 
+                FindMidZValue(polygon.ValueMidZ);
             }
 
-            _model.Polygons = _model.Polygons.OrderByDescending(x => x.ValueMidZ).ToList();
+            _model.Polygons = _model.Polygons.OrderByDescending(x => x.ValueMidZ).ToList();          
 
-            var midZValue = minZValue + (maxZValue - minZValue)* (coof/100);
-
-            DrawPolygons(midZValue);
+            DrawPolygons(GetMidZValueByCoof(coof));
         }
         
         private double SetScreenPointsAndGetZValue(Polygon polygon)
@@ -108,6 +98,8 @@ namespace Engine3D
             zValue /= polygon.Vertices.Count;
             return zValue;
         }
+
+        private double GetMidZValueByCoof(double value) => minZValue + (maxZValue - minZValue) * (value / 100);
         private void DrawPolygons(double midZValue)
         {
             using (SolidBrush brush = new SolidBrush(Color.Black))
@@ -123,6 +115,19 @@ namespace Engine3D
 
                 }
             }
+        }
+        private void FindMidZValue(double value)
+        {
+            if (value > maxZValue)
+                maxZValue = value;
+            else if (value < minZValue)
+                minZValue = value;
+        }
+        private void ResetValues()
+        {
+            _graphics.Clear(Color.White);
+            minZValue = 9999;
+            maxZValue = -9999;
         }
         private Vector GetNormilizedPoint(Vector vector)
         {
